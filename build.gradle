@@ -27,8 +27,9 @@ dependencies {
 
     // Fabric API. This is technically optional, but you probably want it anyway.
     // modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
+    implementation include('com.electronwill.night-config:core:3.6.0')
+    implementation include('com.electronwill.night-config:toml:3.6.0')
 
-    implementation include('com.fasterxml.jackson.dataformat:jackson-dataformat-toml:2.13.0')
 }
 
 processResources {
