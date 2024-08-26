@@ -1,0 +1,27 @@
+{
+  "schemaVersion": 1,
+  "id": "colon3lib",
+  "version": "${version}",
+  "name": "Colon3Lib",
+  "description": ":3",
+  "authors": [],
+  "contact": {},
+  "license": "MIT",
+  "icon": "assets/colon3lib/icon.png",
+  "environment": "*",
+  "entrypoints": {
+    "client": [
+      "dev.mg95.colon3lib.client.Colon3LibClient"
+    ],
+    "main": [
+      "dev.mg95.colon3lib.Colon3Lib"
+    ]
+  },
+  "mixins": [
+    "colon3lib.mixins.json"
+  ],
+  "depends": {
+    "fabricloader": ">=${loader_version}",
+    "minecraft": ">=${minecraft_version}"
+  }
+}
