@@ -52,7 +52,7 @@ jobs:
           github-token: ${{ secrets.GITHUB_TOKEN }}
 
           files: build/libs/!(*-@(dev|sources|dev-shadow)).jar
-          name: "Xungeon Timer ${{ steps.properties.outputs.mod_version }}"
+          name: "Colon3Lib ${{ steps.properties.outputs.mod_version }}"
           version: ${{ steps.properties.outputs.mod_version }}
           version-type: release
           changelog-file: changelog.md
