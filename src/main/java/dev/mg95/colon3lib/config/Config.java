@@ -5,11 +5,13 @@ import com.fasterxml.jackson.dataformat.toml.TomlFactory;
 
 import java.io.File;
 
+import java.io.IOException;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
 public class Config {
-    ObjectMapper mapper = new ObjectMapper(new TomlFactory());
+    private ObjectMapper mapper = new ObjectMapper(new TomlFactory());
+
 
     public void init(Object config, String id) {
         try {
@@ -36,21 +38,17 @@ public class Config {
 
 
         if (file.exists()) {
-            var loadedConfigValues = (LinkedHashMap<String, Object>) mapper.readValue(file, Map.class);
-
+            var loadedConfigValues = loadConfig(file);
             overrideConfig(configValues, loadedConfigValues);
-
         }
-        mapper.writerFor(Map.class).writeValue(file, configValues);
 
-
+        saveConfig(file, configValues);
     }
 
     private LinkedHashMap<String, Object> overrideConfig(LinkedHashMap<String, Object> configValues, LinkedHashMap<String, Object> loadedConfigValues) {
         for (var entry : loadedConfigValues.entrySet()) {
             if (entry.getValue() instanceof LinkedHashMap) {
-                var obj = mapper.convertValue(configValues, configValues.getClass());
-                var map = (LinkedHashMap<String, Object>) obj.get(entry.getKey());
+                var map = (LinkedHashMap<String, Object>) configValues.get(entry.getKey());
                 map.putAll(overrideConfig(new LinkedHashMap<>(), (LinkedHashMap<String, Object>) entry.getValue()));
                 configValues.put(entry.getKey(), map);
                 continue;
@@ -59,5 +57,14 @@ public class Config {
         }
 
         return configValues;
+    }
+
+    private LinkedHashMap<String, Object> loadConfig(File configFile) throws IOException {
+        return (LinkedHashMap<String, Object>) mapper.readValue(configFile, Map.class);
+
+    }
+
+    private void saveConfig(File configFile, LinkedHashMap<String, Object> configValues) throws IOException {
+        mapper.writerFor(Map.class).writeValue(configFile, configValues);
     }
 }
