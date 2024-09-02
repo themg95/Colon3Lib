@@ -32,6 +32,8 @@ public class Config {
         }
 
         saveConfig(file, configValues);
+
+        config = applyValues(configValues, config);
     }
 
     private LinkedHashMap<String, Object> toMap(Object obj) throws IllegalAccessException {
@@ -66,7 +68,8 @@ public class Config {
         return config;
     }
 
-    private LinkedHashMap<String, Object> overrideConfig(LinkedHashMap<String, Object> configValues, LinkedHashMap<String, Object> loadedConfigValues) {
+    private LinkedHashMap<String, Object> overrideConfig
+            (LinkedHashMap<String, Object> configValues, LinkedHashMap<String, Object> loadedConfigValues) {
         for (var entry : configValues.entrySet()) {
             if (entry.getValue() instanceof LinkedHashMap) {
                 var map = overrideConfig(
@@ -105,6 +108,34 @@ public class Config {
         config.putAll(toConfig(configValues));
         config.save();
         config.close();
+    }
+
+    private Object applyValues(LinkedHashMap<String, Object> configValues, Object thisConfig) {
+        for (var field : thisConfig.getClass().getDeclaredFields()) {
+            try {
+                field.setAccessible(true);
+            } catch (InaccessibleObjectException e) {
+                continue;
+            }
+
+            if (!configValues.containsKey(field.getName())) continue;
+
+            if (field.isAnnotationPresent(Option.class)) {
+                try {
+                    field.set(thisConfig, configValues.get(field.getName()));
+                } catch (IllegalAccessException e) {
+                    throw new RuntimeException(e);
+                }
+            } else if (field.isAnnotationPresent(Category.class)) {
+                try {
+                    field.set(thisConfig, applyValues((LinkedHashMap<String, Object>) configValues.get(field.getName()), field.get(thisConfig)));
+                } catch (IllegalAccessException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        }
+
+        return thisConfig;
     }
 
 }
