@@ -37,8 +37,8 @@ dependencies {
     common(project(path: ':common', configuration: 'namedElements')) { transitive false }
     shadowBundle project(path: ':common', configuration: 'transformProductionNeoForge')
 
+
     forgeRuntimeLibrary(implementation include(project(":config")))
-    //forgeRuntimeLibrary(implementation include(project(":ui")))
 }
 
 processResources {

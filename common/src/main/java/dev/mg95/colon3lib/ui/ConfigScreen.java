@@ -120,14 +120,9 @@ public class ConfigScreen extends ScrollableScreen {
 
         switch (option) {
             case Boolean b -> {
-                var checkbox = CheckboxWidget.builder(Text.literal(""), textRenderer).build();
-                var checked = CheckboxWidget.class.getDeclaredField("checked");
-                checked.setAccessible(true);
-                checked.setBoolean(checkbox, (boolean) option);
-
-                var callback = CheckboxWidget.class.getDeclaredField("callback");
-                callback.setAccessible(true);
-                callback.set(checkbox, (CheckboxWidget.Callback) (ignored, enabled) -> {
+                var checkboxBuilder = CheckboxWidget.builder(Text.literal(""), textRenderer);
+                checkboxBuilder.checked((boolean) option);
+                checkboxBuilder.callback((ignored, enabled) -> {
                     try {
                         field.set(object, enabled);
                         configObject.save();
@@ -136,6 +131,7 @@ public class ConfigScreen extends ScrollableScreen {
                     }
                 });
 
+                var checkbox = checkboxBuilder.build();
                 checkbox.setX(this.getActualWidth() - checkbox.getWidth() - resetButtonOffset + 4 /* + 4 to offset the empty message */);
                 checkbox.setY(-1);
 
