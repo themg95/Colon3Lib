@@ -1,0 +1,35 @@
+{
+  "schemaVersion": 1,
+  "id": "colon3lib",
+  "version": "${version}",
+  "name": ":3Lib",
+  "description": "Library for those who :3",
+  "authors": [
+    "mg95"
+  ],
+  "contact": {
+    "sources": "https://github.com/themg95/Colon3Lib"
+  },
+  "license": "MIT",
+  "icon": "assets/colon3lib/icon.png",
+  "environment": "*",
+  "entrypoints": {
+    "main": [
+      "dev.mg95.colon3lib.fabric.Colon3LibFabric"
+    ],
+    "client": [
+      "dev.mg95.colon3lib.fabric.client.Colon3LibFabricClient"
+    ],
+    "modmenu": [
+      "dev.mg95.colon3lib.fabric.client.ModMenuApiImpl"
+    ]
+  },
+  "depends": {
+    "fabricloader": "*",
+    "minecraft": ">=1.21",
+    "java": ">=21"
+  },
+  "suggests": {
+    "modmenu": "*"
+  }
+}

@@ -1,0 +1,7 @@
+{
+  "colon3lib.config.option.isGay.label": "Gay?",
+  "colon3lib.config.option.isGay.tooltip": "Mandatory.",
+  "colon3lib.config.save-warning": "All changes are saved automatically",
+  "colon3lib.config.title": ":3Lib",
+  "colon3lib.config.reset-tooltip": "Reset"
+}

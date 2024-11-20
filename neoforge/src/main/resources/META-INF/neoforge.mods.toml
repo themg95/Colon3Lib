@@ -1,0 +1,28 @@
+modLoader = "javafml"
+loaderVersion = "[4,)"
+issueTrackerURL = "https://github.com/themg95/Colon3Lib/issues"
+license = "MIT"
+
+[[mods]]
+modId = "colon3lib"
+version = "${version}"
+displayName = ":3Lib"
+authors = "mg95"
+description = '''
+Library for those who :3
+'''
+logoFile = "assets/colon3lib/icon.png"
+
+[[dependencies.colon3lib]]
+modId = "neoforge"
+type = "required"
+versionRange = "[21.0,)"
+ordering = "NONE"
+side = "BOTH"
+
+[[dependencies.colon3lib]]
+modId = "minecraft"
+type = "required"
+versionRange = "[1.21,)"
+ordering = "NONE"
+side = "BOTH"
